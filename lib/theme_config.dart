@@ -5,70 +5,47 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:theme_config/extensions.dart';
 
-part 'providers.dart';
+import 'helpers/extensions.dart';
 
-//! Add triple-bar comments
+export 'helpers/extensions.dart';
 
-late SharedPreferences _preferences;
-const _themeModeKey = 'themeMode';
+part 'src/brightness.dart';
+part 'src/theme_builder.dart';
+part 'src/theme_mode.dart';
 
-class ThemeConfig extends StateNotifier<Brightness> {
+/// The entry point for accessing ThemeConfig
+abstract class ThemeConfig {
+  static late Reader _read;
+  static late SharedPreferences _preferences;
+
+  /// This method must be called before any usage of this package
+  ///
+  /// ```dart
+  /// Future<void> main() async {
+  ///   await ThemeConfig.init();
+  /// }
+  /// ```
   static Future<void> init() async {
     _preferences = await SharedPreferences.getInstance();
   }
 
-  final ThemeMode _themeMode;
-  ThemeMode get themeMode => _themeMode;
+  /// Gets the current [themeMode] of the application
+  static ThemeMode get themeMode => _read(_themeModeProvider);
+  static set themeMode(ThemeMode themeMode) =>
+      _read(_themeModeProvider.notifier).state = themeMode;
 
-  ThemeConfig(this._themeMode, Brightness brightness) : super(brightness) {
-    _preferences.setInt(_themeModeKey, _themeMode.index);
-    setSystemBarsStyle();
-  }
+  /// Gets the current [brightness] of the application
+  static Brightness get brightness => _read(_brightnessProvider);
 
-  void update() {
-    if (!_themeMode.isSystem) return;
-    state = SchedulerBinding.instance!.window.platformBrightness;
-    setSystemBarsStyle();
-  }
+  static late SystemUiOverlayStyle _overlayStyle;
+  static late SystemUiOverlayStyle _darkOverlayStyle;
 
-  void setSystemBarsStyle({
-    bool transparentStatusBar = true,
-    Color? systemNavigationBarColor,
-  }) {
-    SystemChrome.setSystemUIOverlayStyle(
-      overlayStyle(
-        state,
-        transparentStatusBar: transparentStatusBar,
-        systemNavigationBarColor: systemNavigationBarColor,
-      ),
-    );
-  }
+  /// Overrides the previously set [overlayStyle]
+  static void setOverlayStyle(SystemUiOverlayStyle style) =>
+      SystemChrome.setSystemUIOverlayStyle(style);
 
-  //!
-  // static ThemeData get light => theme(Palette.colorScheme);
-  // static ThemeData get dark => theme(Palette.darkColorScheme);
-
-  //! apply in the appBarTheme systemOverlayStyle property
-  static SystemUiOverlayStyle overlayStyle(
-    Brightness brightness, {
-    bool transparentStatusBar = true,
-    Color? systemNavigationBarColor,
-  }) {
-    final color = Colors.white;
-    // final color = brightness.isLight
-    //     ? Palette.colorScheme.background
-    //     : Palette.darkColorScheme.background;
-    return SystemUiOverlayStyle(
-      statusBarColor: transparentStatusBar ? Colors.transparent : color,
-      statusBarBrightness: brightness.other,
-      statusBarIconBrightness: brightness.other,
-      systemStatusBarContrastEnforced: null,
-      systemNavigationBarColor: systemNavigationBarColor ?? color,
-      systemNavigationBarIconBrightness: brightness.other,
-      systemNavigationBarDividerColor: null,
-      systemNavigationBarContrastEnforced: null,
-    );
-  }
+  /// Resets the [overlayStyle]
+  static void resetOverlayStyle() => SystemChrome.setSystemUIOverlayStyle(
+      brightness.isLight ? _overlayStyle : _darkOverlayStyle);
 }
