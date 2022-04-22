@@ -56,7 +56,7 @@ Widget myRadioListTile(ThemeMode themeMode) {
 		title: Text(themeMode.name),
 		value: themeMode,
 		groupValue: ThemeConfig.themeMode,
-		onChanged: (mode) => ThemeConfig.themeMode = mode,
+		onChanged: (mode) => setState(() => ThemeConfig.themeMode = mode),
 	);
 }
 ```
