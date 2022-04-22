@@ -1,39 +1,89 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+ThemeConfig makes it easy to switch the status and navigation bars styles when the platform theme changes.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+* Sets system bars' light and dark styles
+* Updates system bars automatically when platform brightness changes
+* Listens to theme mode changes
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+ThemeConfig must be initialized so it can save and load the theme mode preference
+
+```dart
+Future<void> main() async {
+	...
+  await ThemeConfig.init();
+	runApp(MyApp());
+}
+```
+
+Wrap the MaterialApp with the ThemeBuilder widget so it can listen to the platform brightness and theme mode changes and change the system bars accordingly
+
+```dart
+ThemeBuilder(
+	overlayStyle: myOverlayStyle,
+	darkOverlayStyle: myDarkOverlayStyle,
+  builder: (themeMode) => MaterialApp(
+		...
+    themeMode: themeMode,
+  ),
+)
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+Access the app's brightness and theme mode anywhere in the project
 
 ```dart
-const like = 'sample';
+final brightness = ThemeConfig.brightness;
+final themeMode = ThemeConfig.themeMode;
+```
+
+Change between theme modes
+
+```dart
+ThemeConfig.themeMode = ThemeMode.light;
+ThemeConfig.themeMode = ThemeMode.dark;
+ThemeConfig.themeMode = ThemeMode.system;
+```
+
+* Example with radio list tile:
+
+```dart
+Widget myRadioListTile(ThemeMode themeMode) {
+	return RadioListTile<ThemeMode>(
+		title: Text(themeMode.name),
+		value: themeMode
+		groupValue: ThemeConfig.themeMode
+		onChanged (mode) => ThemeConfig.themeMode = mode;
+		),
+}
+```
+
+```dart
+Column(children: ThemeMode.values.map(myRadioListTile).toList());
+```
+
+Change the current overlay style for a specific page
+
+```dart
+ThemeConfig.setOverlayStyle(tempOverlayStyle);
+```
+
+Reset the overlay style to the initially defined
+
+```dart
+ThemeConfig.resetOverlayStyle();
+```
+
+Dynamically redefine the overlay styles
+
+```dart
+ThemeConfig.overlayStyle: newOverlayStyle,
+ThemeConfig.darkOverlayStyle: newDarkOverlayStyle,
 ```
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+If you notice any bugs not present in [issues](), please file a new issue. If you are willing to fix or enhance things yourself, you are very welcome to make a pull request.
