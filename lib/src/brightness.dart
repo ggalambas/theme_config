@@ -26,6 +26,6 @@ abstract class _Brightness {
   }
 
   static void update(ThemeMode themeMode) {
-    if (!themeMode.isSystem) value = _platformBrightness;
+    if (themeMode.isSystem) value = _platformBrightness;
   }
 }
