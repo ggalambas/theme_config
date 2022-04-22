@@ -1,6 +1,6 @@
 part of '../theme_config.dart';
 
-class ThemeBuilder extends ConsumerStatefulWidget {
+class ThemeBuilder extends StatelessWidget {
   /// {@template builder}
   /// MaterialApp.themeMode must be set to [themeMode]
   ///
@@ -29,36 +29,7 @@ class ThemeBuilder extends ConsumerStatefulWidget {
   }
 
   @override
-  _ThemeBuilderState createState() => _ThemeBuilderState();
-}
-
-class _ThemeBuilderState extends ConsumerState<ThemeBuilder>
-    with WidgetsBindingObserver {
-  @override
-  void initState() {
-    super.initState();
-    ThemeConfig._read = ref.read;
-    updateBrightness();
-    WidgetsBinding.instance?.addObserver(this);
-  }
-
-  @override
-  void didChangePlatformBrightness() {
-    super.didChangePlatformBrightness();
-    updateBrightness();
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance?.removeObserver(this);
-    super.dispose();
-  }
-
-  void updateBrightness() => _Brightness.update(ref.read(_themeModeProvider));
-
-  @override
   Widget build(BuildContext context) {
-    final themeMode = ref.watch(_themeModeProvider);
-    return widget.builder(themeMode);
+    return ProviderScope(child: _ThemeObserver(builder: builder));
   }
 }
