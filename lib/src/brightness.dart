@@ -4,7 +4,7 @@ abstract class _Brightness {
   static late Brightness _value;
   static Brightness get value => _value;
   static set value(Brightness brightness) {
-    value = brightness;
+    _value = brightness;
     ThemeConfig.resetOverlayStyle();
   }
 
@@ -26,6 +26,6 @@ abstract class _Brightness {
   }
 
   static void update(ThemeMode themeMode) {
-    if (!themeMode.isSystem) value = _platformBrightness;
+    if (themeMode.isSystem) value = _platformBrightness;
   }
 }
