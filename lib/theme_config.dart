@@ -17,6 +17,7 @@ part 'src/custom_overlay_style.dart';
 part 'src/route_aware_state.dart';
 part 'src/theme_builder.dart';
 part 'src/theme_mode.dart';
+part 'src/theme_observer.dart';
 
 /// The entry point for accessing ThemeConfig
 abstract class ThemeConfig {
