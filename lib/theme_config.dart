@@ -15,27 +15,31 @@ export 'helpers/extensions.dart';
 part 'src/brightness.dart';
 part 'src/custom_overlay_style.dart';
 part 'src/route_aware_state.dart';
-part 'src/theme_builder.dart';
 part 'src/theme_mode.dart';
 part 'src/theme_observer.dart';
+part 'theme_builder.dart';
+part 'theme_profile.dart';
 
 /// The entry point for accessing ThemeConfig
 abstract class ThemeConfig {
-  static late final Reader _read;
-  static late final SharedPreferences _preferences;
   static final _routeObserver = RouteObserver<PageRoute>();
+  static late final Reader _read;
+  static late final VoidCallback _refresh;
+  static late final SharedPreferences _preferences;
+  static late final ThemeProfile _profile;
 
   /// This method must be called before any usage of this package
   ///
   /// ```dart
   /// Future<void> main() async {
-  ///   await ThemeConfig.init();
+  ///   await ThemeConfig.init(themeProfile);
   ///   runApp(MyApp());
   /// }
   /// ```
-  static Future<void> init() async {
+  static Future<void> init(ThemeProfile profile) async {
     WidgetsFlutterBinding.ensureInitialized();
     _preferences = await SharedPreferences.getInstance();
+    _profile = profile;
   }
 
   /// Gets the current [themeMode] of the application
@@ -46,24 +50,29 @@ abstract class ThemeConfig {
   /// Gets the current [brightness] of the application
   static Brightness get brightness => _Brightness.value;
 
-  static late SystemUiOverlayStyle _overlayStyle;
-  static late SystemUiOverlayStyle _darkOverlayStyle;
-
   static set overlayStyle(SystemUiOverlayStyle style) {
-    _overlayStyle = style;
-    resetOverlayStyle();
+    _profile._overlayStyle = style;
+    _refresh();
   }
 
   static set darkOverlayStyle(SystemUiOverlayStyle style) {
-    _darkOverlayStyle = style;
-    resetOverlayStyle();
+    _profile._darkOverlayStyle = style;
+    _refresh();
   }
 
   /// Overrides the previously set [overlayStyle]
-  static void setOverlayStyle(SystemUiOverlayStyle style) =>
-      SystemChrome.setSystemUIOverlayStyle(style);
+  static void setOverlayStyle(SystemUiOverlayStyle style) {
+    _profile._customOverlayStyle = style;
+    SystemChrome.setSystemUIOverlayStyle(style);
+    _refresh();
+  }
 
   /// Resets the [overlayStyle]
-  static void resetOverlayStyle() => SystemChrome.setSystemUIOverlayStyle(
-      brightness.isLight ? _overlayStyle : _darkOverlayStyle);
+  static void resetOverlayStyle() {
+    _profile._customOverlayStyle = null;
+    SystemChrome.setSystemUIOverlayStyle(
+      brightness.isLight ? _profile._overlayStyle : _profile._darkOverlayStyle,
+    );
+    _refresh();
+  }
 }

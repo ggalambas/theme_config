@@ -1,7 +1,7 @@
 part of '../theme_config.dart';
 
 class _ThemeObserver extends ConsumerStatefulWidget {
-  final Widget Function(ThemeMode themeMode) builder;
+  final Widget Function(ThemeProfile) builder;
   const _ThemeObserver({Key? key, required this.builder}) : super(key: key);
 
   @override
@@ -14,6 +14,7 @@ class _ThemeObserverState extends ConsumerState<_ThemeObserver>
   void initState() {
     super.initState();
     ThemeConfig._read = ref.read;
+    ThemeConfig._refresh = () => setState(() {});
     updateBrightness();
     WidgetsBinding.instance?.addObserver(this);
   }
@@ -34,7 +35,7 @@ class _ThemeObserverState extends ConsumerState<_ThemeObserver>
 
   @override
   Widget build(BuildContext context) {
-    final themeMode = ref.watch(_themeModeProvider);
-    return widget.builder(themeMode);
+    ref.watch(_themeModeProvider);
+    return widget.builder(ThemeConfig._profile);
   }
 }
