@@ -28,6 +28,7 @@ abstract class ThemeConfig {
   /// }
   /// ```
   static Future<void> init() async {
+    WidgetsFlutterBinding.ensureInitialized();
     _preferences = await SharedPreferences.getInstance();
   }
 
