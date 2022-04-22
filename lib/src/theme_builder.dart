@@ -24,8 +24,8 @@ class ThemeBuilder extends StatelessWidget {
     SystemUiOverlayStyle darkOverlayStyle = const SystemUiOverlayStyle(),
     required this.builder,
   }) : super(key: key) {
-    ThemeConfig.overlayStyle = overlayStyle;
-    ThemeConfig.darkOverlayStyle = darkOverlayStyle;
+    ThemeConfig._overlayStyle = overlayStyle;
+    ThemeConfig._darkOverlayStyle = darkOverlayStyle;
   }
 
   @override

@@ -68,8 +68,8 @@ Column(children: ThemeMode.values.map(myRadioListTile).toList())
 Dynamically redefine the overlay styles
 
 ```dart
-ThemeConfig.overlayStyle: myNewOverlayStyle,
-ThemeConfig.darkOverlayStyle: myNewDarkOverlayStyle,
+ThemeConfig.overlayStyle = myNewOverlayStyle;
+ThemeConfig.darkOverlayStyle = myNewDarkOverlayStyle;
 ```
 
 Change the current overlay style

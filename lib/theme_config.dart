@@ -46,8 +46,18 @@ abstract class ThemeConfig {
   /// Gets the current [brightness] of the application
   static Brightness get brightness => _Brightness.value;
 
-  static late SystemUiOverlayStyle overlayStyle;
-  static late SystemUiOverlayStyle darkOverlayStyle;
+  static late SystemUiOverlayStyle _overlayStyle;
+  static late SystemUiOverlayStyle _darkOverlayStyle;
+
+  static set overlayStyle(SystemUiOverlayStyle style) {
+    _overlayStyle = style;
+    resetOverlayStyle();
+  }
+
+  static set darkOverlayStyle(SystemUiOverlayStyle style) {
+    _darkOverlayStyle = style;
+    resetOverlayStyle();
+  }
 
   /// Overrides the previously set [overlayStyle]
   static void setOverlayStyle(SystemUiOverlayStyle style) =>
@@ -55,5 +65,5 @@ abstract class ThemeConfig {
 
   /// Resets the [overlayStyle]
   static void resetOverlayStyle() => SystemChrome.setSystemUIOverlayStyle(
-      brightness.isLight ? overlayStyle : darkOverlayStyle);
+      brightness.isLight ? _overlayStyle : _darkOverlayStyle);
 }
