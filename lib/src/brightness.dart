@@ -4,7 +4,7 @@ abstract class _Brightness {
   static late Brightness _value;
   static Brightness get value => _value;
   static set value(Brightness brightness) {
-    value = brightness;
+    _value = brightness;
     ThemeConfig.resetOverlayStyle();
   }
 
