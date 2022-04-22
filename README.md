@@ -56,19 +56,26 @@ Widget myRadioListTile(ThemeMode themeMode) {
 		title: Text(themeMode.name),
 		value: themeMode,
 		groupValue: ThemeConfig.themeMode,
-		onChanged: (mode) => ThemeConfig.themeMode = mode;
-		);
+		onChanged: (mode) => ThemeConfig.themeMode = mode,
+	);
 }
 ```
 
 ```dart
-Column(children: ThemeMode.values.map(myRadioListTile).toList());
+Column(children: ThemeMode.values.map(myRadioListTile).toList())
 ```
 
-Change the current overlay style for a specific page
+Dynamically redefine the overlay styles
 
 ```dart
-ThemeConfig.setOverlayStyle(tempOverlayStyle);
+ThemeConfig.overlayStyle: myNewOverlayStyle,
+ThemeConfig.darkOverlayStyle: myNewDarkOverlayStyle,
+```
+
+Change the current overlay style
+
+```dart
+ThemeConfig.setOverlayStyle(myCustomOverlayStyle);
 ```
 
 Reset the overlay style to the initially defined
@@ -77,11 +84,13 @@ Reset the overlay style to the initially defined
 ThemeConfig.resetOverlayStyle();
 ```
 
-Dynamically redefine the overlay styles
+Temporarily change the overlay style when on a specific page
 
 ```dart
-ThemeConfig.overlayStyle: newOverlayStyle,
-ThemeConfig.darkOverlayStyle: newDarkOverlayStyle,
+CustomOverlayStyle(
+	style: myCustomOverlayStyle,
+	child: ...
+)
 ```
 
 ## Additional information

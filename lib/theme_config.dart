@@ -1,5 +1,7 @@
 library theme_config;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -11,13 +13,16 @@ import 'helpers/extensions.dart';
 export 'helpers/extensions.dart';
 
 part 'src/brightness.dart';
+part 'src/custom_overlay_style.dart';
+part 'src/route_aware_state.dart';
 part 'src/theme_builder.dart';
 part 'src/theme_mode.dart';
 
 /// The entry point for accessing ThemeConfig
 abstract class ThemeConfig {
-  static late Reader _read;
-  static late SharedPreferences _preferences;
+  static late final Reader _read;
+  static late final SharedPreferences _preferences;
+  static final _routeObserver = RouteObserver<PageRoute>();
 
   /// This method must be called before any usage of this package
   ///
