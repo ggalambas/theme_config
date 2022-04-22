@@ -57,7 +57,7 @@ Widget myRadioListTile(ThemeMode themeMode) {
 		value: themeMode
 		groupValue: ThemeConfig.themeMode
 		onChanged (mode) => ThemeConfig.themeMode = mode;
-		),
+		);
 }
 ```
 
