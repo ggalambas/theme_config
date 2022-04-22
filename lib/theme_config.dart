@@ -24,6 +24,7 @@ abstract class ThemeConfig {
   /// ```dart
   /// Future<void> main() async {
   ///   await ThemeConfig.init();
+  ///   runApp(MyApp());
   /// }
   /// ```
   static Future<void> init() async {
@@ -36,10 +37,10 @@ abstract class ThemeConfig {
       _read(_themeModeProvider.notifier).state = themeMode;
 
   /// Gets the current [brightness] of the application
-  static Brightness get brightness => _read(_brightnessProvider);
+  static Brightness get brightness => _Brightness.value;
 
-  static late SystemUiOverlayStyle _overlayStyle;
-  static late SystemUiOverlayStyle _darkOverlayStyle;
+  static late SystemUiOverlayStyle overlayStyle;
+  static late SystemUiOverlayStyle darkOverlayStyle;
 
   /// Overrides the previously set [overlayStyle]
   static void setOverlayStyle(SystemUiOverlayStyle style) =>
@@ -47,5 +48,5 @@ abstract class ThemeConfig {
 
   /// Resets the [overlayStyle]
   static void resetOverlayStyle() => SystemChrome.setSystemUIOverlayStyle(
-      brightness.isLight ? _overlayStyle : _darkOverlayStyle);
+      brightness.isLight ? overlayStyle : darkOverlayStyle);
 }

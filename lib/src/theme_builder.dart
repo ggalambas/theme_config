@@ -24,8 +24,8 @@ class ThemeBuilder extends ConsumerStatefulWidget {
     SystemUiOverlayStyle darkOverlayStyle = const SystemUiOverlayStyle(),
     required this.builder,
   }) : super(key: key) {
-    ThemeConfig._overlayStyle = overlayStyle;
-    ThemeConfig._darkOverlayStyle = darkOverlayStyle;
+    ThemeConfig.overlayStyle = overlayStyle;
+    ThemeConfig.darkOverlayStyle = darkOverlayStyle;
   }
 
   @override
@@ -54,7 +54,7 @@ class _ThemeBuilderState extends ConsumerState<ThemeBuilder>
     super.dispose();
   }
 
-  void updateBrightness() => ref.read(_brightnessProvider.notifier)._update();
+  void updateBrightness() => _Brightness.update(ref.read(_themeModeProvider));
 
   @override
   Widget build(BuildContext context) {

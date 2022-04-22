@@ -6,9 +6,11 @@ final _themeModeProvider = StateNotifierProvider<_ThemeModeNotifier, ThemeMode>(
 
 class _ThemeModeNotifier extends StateNotifier<ThemeMode> {
   static const _themeModeKey = 'themeMode';
-  _ThemeModeNotifier._() : super(_resolve());
+  _ThemeModeNotifier._() : super(_initial) {
+    _Brightness.setFromThemeMode(state);
+  }
 
-  static ThemeMode _resolve() {
+  static ThemeMode get _initial {
     final i = ThemeConfig._preferences.getInt(_themeModeKey);
     return i == null ? ThemeMode.system : ThemeMode.values[i];
   }
@@ -18,5 +20,6 @@ class _ThemeModeNotifier extends StateNotifier<ThemeMode> {
   set state(ThemeMode themeMode) {
     ThemeConfig._preferences.setInt(_themeModeKey, themeMode.index);
     super.state = themeMode;
+    _Brightness.setFromThemeMode(state);
   }
 }

@@ -1,43 +1,31 @@
 part of '../theme_config.dart';
 
-final _brightnessProvider =
-    StateNotifierProvider<_BrightnessNotifier, Brightness>(
-  (ref) {
-    final themeMode = ref.watch(_themeModeProvider);
-    return _BrightnessNotifier._(themeMode);
-  },
-);
-
-class _BrightnessNotifier extends StateNotifier<Brightness> {
-  final ThemeMode _themeMode;
-  _BrightnessNotifier._(this._themeMode) : super(_resolve(_themeMode)) {
-    _changeOverlayStyle();
+abstract class _Brightness {
+  static late Brightness _value;
+  static Brightness get value => _value;
+  static set value(Brightness brightness) {
+    value = brightness;
+    ThemeConfig.resetOverlayStyle();
   }
 
   static Brightness get _platformBrightness =>
       SchedulerBinding.instance!.window.platformBrightness;
 
-  static Brightness _resolve(ThemeMode themeMode) {
+  static void setFromThemeMode(ThemeMode themeMode) {
     switch (themeMode) {
       case ThemeMode.light:
-        return Brightness.light;
+        value = Brightness.light;
+        break;
       case ThemeMode.dark:
-        return Brightness.dark;
+        value = Brightness.dark;
+        break;
       case ThemeMode.system:
-        return _platformBrightness;
+        value = _platformBrightness;
+        break;
     }
   }
 
-  @override
-  @protected
-  set state(Brightness brightness) {
-    _changeOverlayStyle();
-    super.state = brightness;
+  static void update(ThemeMode themeMode) {
+    if (!themeMode.isSystem) value = _platformBrightness;
   }
-
-  void _update() {
-    if (!_themeMode.isSystem) state = _platformBrightness;
-  }
-
-  _changeOverlayStyle() => ThemeConfig.resetOverlayStyle();
 }
