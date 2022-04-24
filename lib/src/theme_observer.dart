@@ -14,8 +14,11 @@ class _ThemeObserverState extends ConsumerState<_ThemeObserver>
   void initState() {
     super.initState();
     ThemeConfig._read = ref.read;
-    ThemeConfig._refresh = () => setState(() {});
+    ThemeConfig._refresh = () {
+      if (mounted) setState(() {});
+    };
     updateBrightness();
+
     WidgetsBinding.instance?.addObserver(this);
   }
 

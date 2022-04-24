@@ -66,8 +66,12 @@ abstract class ThemeConfig {
   /// Overrides the previously set [overlayStyle]
   static void setOverlayStyle(SystemUiOverlayStyle style) {
     _profile._customOverlayStyle = style;
-    SystemChrome.setSystemUIOverlayStyle(style);
     _refresh();
+    // avoid blinking when there's an app bar
+    Future.delayed(
+      const Duration(milliseconds: 200),
+      () => SystemChrome.setSystemUIOverlayStyle(style),
+    );
   }
 
   /// Resets the [overlayStyle]
