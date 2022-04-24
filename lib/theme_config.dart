@@ -12,10 +12,11 @@ import 'helpers/extensions.dart';
 
 export 'helpers/extensions.dart';
 
-part 'src/brightness.dart';
+part 'providers/brightness.dart';
+part 'providers/overlay.dart';
+part 'providers/theme_mode.dart';
 part 'src/custom_overlay_style.dart';
 part 'src/route_aware_state.dart';
-part 'src/theme_mode.dart';
 part 'src/theme_observer.dart';
 part 'theme_builder.dart';
 part 'theme_profile.dart';
@@ -48,7 +49,9 @@ abstract class ThemeConfig {
       _read(_themeModeProvider.notifier).state = themeMode;
 
   /// Gets the current [brightness] of the application
-  static Brightness get brightness => _Brightness.value;
+  static Brightness get brightness => _read(_brightnessProvider);
+
+  static Overlay overlay;
 
   static set overlayStyle(SystemUiOverlayStyle style) {
     _profile._overlayStyle = style;

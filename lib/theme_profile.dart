@@ -5,7 +5,6 @@ class ThemeProfile {
   late final ThemeData _dark;
   late final SystemUiOverlayStyle _overlayStyle;
   late final SystemUiOverlayStyle _darkOverlayStyle;
-  SystemUiOverlayStyle? _customOverlayStyle;
 
   ThemeProfile({
     ColorScheme colorScheme = const ColorScheme.light(),
@@ -24,14 +23,16 @@ class ThemeProfile {
   ThemeData _defaultTheme(ColorScheme colorScheme) =>
       ThemeData.from(colorScheme: colorScheme);
 
+  
+
   ThemeData get light => _light.copyWith(
         appBarTheme: _light.appBarTheme.copyWith(
-          systemOverlayStyle: _customOverlayStyle ?? _overlayStyle,
+          systemOverlayStyle: ThemeConfig.overlay.style ?? _overlayStyle,
         ),
       );
   ThemeData get dark => _dark.copyWith(
         appBarTheme: _dark.appBarTheme.copyWith(
-          systemOverlayStyle: _customOverlayStyle ?? _darkOverlayStyle,
+          systemOverlayStyle: ThemeConfig.overlay.style ?? _darkOverlayStyle,
         ),
       );
 

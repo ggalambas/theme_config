@@ -31,7 +31,9 @@ class _ThemeObserverState extends ConsumerState<_ThemeObserver>
     super.dispose();
   }
 
-  void updateBrightness() => _Brightness.update(ref.read(_themeModeProvider));
+  void updateBrightness() => ref
+      .read(_brightnessProvider.notifier)
+      .update(ref.read(_themeModeProvider));
 
   @override
   Widget build(BuildContext context) {
