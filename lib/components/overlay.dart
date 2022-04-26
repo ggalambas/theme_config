@@ -42,9 +42,9 @@ abstract class Overlay {
     if (style != null) _style = style;
   }
 
-  void _refreshAndApply([VoidCallback? apply]) {
+  void _refreshAndApply() {
     _refresh();
-    Future.delayed(const Duration(milliseconds: 200), apply ?? _apply);
+    Future.delayed(const Duration(milliseconds: 200), _apply);
   }
 
   void _apply() => SystemChrome.setSystemUIOverlayStyle(_style);
