@@ -57,6 +57,8 @@ abstract class ThemeConfig {
   static Brightness get brightness => _read(_brightnessProvider);
 
   /// Overrides the previously set [overlayStyle]
+  ///
+  /// todo [refresh]
   static setOverlayStyle(
     SystemUiOverlayStyle style, {
     bool refresh = true,
@@ -64,6 +66,8 @@ abstract class ThemeConfig {
       LightOverlay().setStyle(style, refresh: refresh);
 
   /// Overrides the previously set [darkOverlayStyle]
+  ///
+  /// todo [refresh]
   static setDarkOverlayStyle(
     SystemUiOverlayStyle style, {
     bool refresh = true,
