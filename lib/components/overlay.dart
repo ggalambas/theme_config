@@ -40,6 +40,7 @@ abstract class Overlay {
 
   void _apply() => SystemChrome.setSystemUIOverlayStyle(_style);
 
+  SystemUiOverlayStyle? get customOrNull;
   void updateFromBrightness(Brightness brightness) {}
   void setCustom(SystemUiOverlayStyle style);
   void removeCustom(Brightness brightness) {}
@@ -48,9 +49,13 @@ abstract class Overlay {
 abstract class BrightnessOverlay extends Overlay {
   static resolve(Brightness brightness) =>
       brightness.isLight ? LightOverlay() : DarkOverlay();
+
   @override
   void setCustom(SystemUiOverlayStyle style) =>
       _changeTo(CustomOverlay(style))._refreshAndApply();
+
+  @override
+  SystemUiOverlayStyle? get customOrNull => null;
 }
 
 class LightOverlay extends BrightnessOverlay {
@@ -84,4 +89,7 @@ class CustomOverlay extends Overlay {
   @override
   void removeCustom(Brightness brightness) =>
       _changeTo(BrightnessOverlay.resolve(brightness))._refreshAndApply();
+
+  @override
+  SystemUiOverlayStyle? get customOrNull => style;
 }

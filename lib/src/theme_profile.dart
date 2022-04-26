@@ -32,13 +32,15 @@ class ThemeProfile {
 
   ThemeData get light => _light.copyWith(
         appBarTheme: _light.appBarTheme.copyWith(
-          systemOverlayStyle: ThemeConfig._overlay.style,
+          systemOverlayStyle:
+              ThemeConfig._overlay.customOrNull ?? LightOverlay().style,
         ),
       );
 
   ThemeData get dark => _dark.copyWith(
         appBarTheme: _dark.appBarTheme.copyWith(
-          systemOverlayStyle: ThemeConfig._overlay.style,
+          systemOverlayStyle:
+              ThemeConfig._overlay.customOrNull ?? DarkOverlay().style,
         ),
       );
 

@@ -65,6 +65,9 @@ class _ThemeObserverState extends ConsumerState<_ThemeObserver>
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<Brightness>(_brightnessProvider, (_, brightness) {
+      ThemeConfig._overlay.updateFromBrightness(brightness);
+    });
     ref.watch(_themeModeProvider);
     return widget.builder(ThemeConfig._profile);
   }
