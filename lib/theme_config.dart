@@ -25,6 +25,7 @@ abstract class ThemeConfig {
   static late final SharedPreferences _preferences;
   static late final ThemeProfile _profile;
   static late Overlay _overlay;
+  static final routeObserver = RouteObserver<PageRoute>();
 
   /// This method must be called before any usage of this package
   ///
