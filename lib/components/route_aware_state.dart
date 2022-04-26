@@ -1,7 +1,10 @@
-part of '../theme_config.dart';
+import 'dart:async';
 
-abstract class _RouteAwareState<T extends StatefulWidget> extends State<T>
+import 'package:flutter/widgets.dart';
+
+abstract class RouteAwareState<T extends StatefulWidget> extends State<T>
     with RouteAware {
+  static final _routeObserver = RouteObserver<PageRoute>();
   bool _enteredScreen = false;
 
   @override
@@ -9,8 +12,7 @@ abstract class _RouteAwareState<T extends StatefulWidget> extends State<T>
   void initState() {
     super.initState();
     // Subscribe to route changes
-    ThemeConfig._routeObserver
-        .subscribe(this, ModalRoute.of(context) as PageRoute);
+    _routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
     // Execute asynchronously as soon as possible
     Timer.run(_enterScreen);
   }
@@ -19,7 +21,7 @@ abstract class _RouteAwareState<T extends StatefulWidget> extends State<T>
   @mustCallSuper
   void dispose() {
     if (_enteredScreen) _leaveScreen();
-    ThemeConfig._routeObserver.unsubscribe(this);
+    _routeObserver.unsubscribe(this);
     super.dispose();
   }
 

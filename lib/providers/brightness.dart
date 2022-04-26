@@ -9,20 +9,23 @@ final _brightnessProvider =
 );
 
 class _BrightnessNotifier extends StateNotifier<Brightness> {
-  _BrightnessNotifier._(ThemeMode themeMode) : super(fromThemeMode(themeMode)) {
-    // ThemeConfig.swapOverlayStyle();
+  _BrightnessNotifier._(ThemeMode themeMode)
+      : super(_fromThemeMode(themeMode)) {
+    _updateOverlay();
   }
 
   @override
   @protected
   set state(Brightness brightness) {
     super.state = brightness;
-    // ThemeConfig.swapOverlayStyle();
+    _updateOverlay();
   }
 
-  void update(ThemeMode themeMode) => state = fromThemeMode(themeMode);
+  void update(ThemeMode themeMode) => state = _fromThemeMode(themeMode);
 
-  static Brightness fromThemeMode(ThemeMode themeMode) {
+  void _updateOverlay() => ThemeConfig._overlay.updateFromBrightness(state);
+
+  static Brightness _fromThemeMode(ThemeMode themeMode) {
     switch (themeMode) {
       case ThemeMode.light:
         return Brightness.light;
