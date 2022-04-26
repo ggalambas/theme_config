@@ -59,7 +59,8 @@ abstract class ThemeConfig {
 
   /// Overrides the previously set [overlayStyle]
   /// todo [refresh]
-  static setOverlayStyle(
+  static setOverlayStyle(SystemUiOverlayStyle style) => _setOverlayStyle(style);
+  static _setOverlayStyle(
     SystemUiOverlayStyle style, {
     bool refresh = true,
   }) =>
@@ -71,7 +72,9 @@ abstract class ThemeConfig {
 
   /// Overrides the previously set [darkOverlayStyle]
   /// todo [refresh]
-  static setDarkOverlayStyle(
+  static setDarkOverlayStyle(SystemUiOverlayStyle style) =>
+      _setDarkOverlayStyle(style);
+  static _setDarkOverlayStyle(
     SystemUiOverlayStyle style, {
     bool refresh = true,
   }) =>

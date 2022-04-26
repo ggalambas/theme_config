@@ -74,7 +74,7 @@ class LightOverlay extends BrightnessOverlay {
 
   @override
   void updateFromBrightness(Brightness brightness) {
-    if (brightness.isDark) _changeTo(DarkOverlay())._apply();
+    if (brightness.isDark) _changeTo(DarkOverlay())._refreshAndApply();
   }
 }
 
@@ -85,7 +85,7 @@ class DarkOverlay extends BrightnessOverlay {
 
   @override
   void updateFromBrightness(Brightness brightness) {
-    if (brightness.isLight) _changeTo(LightOverlay())._apply();
+    if (brightness.isLight) _changeTo(LightOverlay())._refreshAndApply();
   }
 }
 
