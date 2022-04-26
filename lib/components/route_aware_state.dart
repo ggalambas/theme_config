@@ -1,27 +1,30 @@
 import 'dart:async';
 
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/widgets.dart';
+import 'package:theme_config/theme_config.dart';
 
 abstract class RouteAwareState<T extends StatefulWidget> extends State<T>
-    with RouteAware {
-  static final _routeObserver = RouteObserver<PageRoute>();
+    with RouteAware, AfterLayoutMixin<T> {
   bool _enteredScreen = false;
 
   @override
   @mustCallSuper
-  void initState() {
-    super.initState();
-    // Subscribe to route changes
-    _routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
-    // Execute asynchronously as soon as possible
-    Timer.run(_enterScreen);
+  void afterFirstLayout(BuildContext context) {
+    if (mounted) {
+      // Subscribe to route changes
+      ThemeConfig.routeObserver
+          .subscribe(this, ModalRoute.of(context) as PageRoute);
+      // Execute asynchronously as soon as possible
+      Timer.run(_enterScreen);
+    }
   }
 
   @override
   @mustCallSuper
   void dispose() {
     if (_enteredScreen) _leaveScreen();
-    _routeObserver.unsubscribe(this);
+    ThemeConfig.routeObserver.unsubscribe(this);
     super.dispose();
   }
 
