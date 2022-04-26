@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:theme_config/helpers/extensions.dart';
 
 abstract class Overlay {
-  static VoidCallback? _refresh;
+  static late final VoidCallback _refresh;
   static late final ValueChanged<Overlay> _changeOverlay;
 
   static Overlay init({
@@ -23,9 +23,19 @@ abstract class Overlay {
 
   late SystemUiOverlayStyle _style;
   SystemUiOverlayStyle get style => _style;
-  void setStyle(SystemUiOverlayStyle style, {bool refresh = true}) {
+  void setStyle(
+    SystemUiOverlayStyle style, {
+    bool refresh = true,
+    bool apply = true,
+  }) {
     _style = style;
-    if (refresh) _refreshAndApply();
+    if (refresh && apply) {
+      _refreshAndApply();
+    } else if (refresh) {
+      _refresh();
+    } else if (apply) {
+      _apply();
+    }
   }
 
   Overlay([SystemUiOverlayStyle? style]) {
@@ -33,8 +43,7 @@ abstract class Overlay {
   }
 
   void _refreshAndApply([VoidCallback? apply]) {
-    if (_refresh == null) return;
-    _refresh!();
+    _refresh();
     Future.delayed(const Duration(milliseconds: 200), apply ?? _apply);
   }
 

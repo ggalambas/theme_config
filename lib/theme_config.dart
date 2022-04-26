@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:theme_config/components/overlay.dart';
 import 'package:theme_config/components/route_aware_state.dart';
+import 'package:theme_config/helpers/extensions.dart';
 
 export 'helpers/extensions.dart';
 
@@ -62,7 +63,11 @@ abstract class ThemeConfig {
     SystemUiOverlayStyle style, {
     bool refresh = true,
   }) =>
-      LightOverlay().setStyle(style, refresh: refresh);
+      LightOverlay().setStyle(
+        style,
+        refresh: refresh,
+        apply: brightness.isLight,
+      );
 
   /// Overrides the previously set [darkOverlayStyle]
   /// todo [refresh]
@@ -70,7 +75,11 @@ abstract class ThemeConfig {
     SystemUiOverlayStyle style, {
     bool refresh = true,
   }) =>
-      DarkOverlay().setStyle(style, refresh: refresh);
+      DarkOverlay().setStyle(
+        style,
+        refresh: refresh,
+        apply: brightness.isDark,
+      );
 
   /// Overrides all the styles, to reset you can call [removeCustomOverlayStyle]
   static void setCustomOverlayStyle(SystemUiOverlayStyle style) =>
