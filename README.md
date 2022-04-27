@@ -8,12 +8,34 @@ ThemeConfig makes it easy to switch the status and navigation bars styles when t
 
 ## Getting started
 
-ThemeConfig must be initialized so it can save and load the theme mode preference
+Create a theme profile defining each style independently
+
+```dart
+final themeProfile = ThemeProfile(
+	theme: ThemeData.light(),
+	darkTheme: ThemeData.dark(),
+	overlayStyle: SystemUiOverlayStyle.light,
+	darkOverlayStyle: SystemUiOverlayStyle.dark,
+);
+```
+
+Or based on color schemes
+
+```dart
+final themeProfile = ThemeProfile.fromColorScheme(
+	colorScheme: ColorScheme.light(),
+	darkColorScheme: ColorScheme.dark(),
+	theme: (colorScheme) => ThemeData.from(colorScheme: colorScheme),
+	overlayStyle: (colorScheme) => SystemUiOverlayStyle(...),
+);
+```
+
+ThemeConfig must be initialized so it can save and load the theme mode preferences
 
 ```dart
 Future<void> main() async {
 	...
-  await ThemeConfig.init();
+  await ThemeConfig.init(themeProfile);
 	runApp(MyApp());
 }
 ```
@@ -22,11 +44,11 @@ Wrap the MaterialApp with the ThemeBuilder widget so it can listen to the platfo
 
 ```dart
 ThemeBuilder(
-	overlayStyle: myOverlayStyle,
-	darkOverlayStyle: myDarkOverlayStyle,
-  builder: (themeMode) => MaterialApp(
+  builder: (theme) => MaterialApp(
 		...
-    themeMode: themeMode,
+		theme: theme.light,
+		darkTheme: theme.dark,
+    themeMode: theme.mode,
   ),
 )
 ```
@@ -43,9 +65,9 @@ final themeMode = ThemeConfig.themeMode;
 Change between theme modes
 
 ```dart
-ThemeConfig.themeMode = ThemeMode.light;
-ThemeConfig.themeMode = ThemeMode.dark;
-ThemeConfig.themeMode = ThemeMode.system;
+ThemeConfig.setThemeMode(ThemeMode.light);
+ThemeConfig.setThemeMode(ThemeMode.dark);
+ThemeConfig.setThemeMode(ThemeMode.system);
 ```
 
 * Example with radio list tile:
@@ -56,7 +78,7 @@ Widget myRadioListTile(ThemeMode themeMode) {
 		title: Text(themeMode.name),
 		value: themeMode,
 		groupValue: ThemeConfig.themeMode,
-		onChanged: (mode) => setState(() => ThemeConfig.themeMode = mode),
+		onChanged: (mode) => setState(() => ThemeConfig.setThemeMode(mode)),
 	);
 }
 ```
@@ -68,27 +90,37 @@ Column(children: ThemeMode.values.map(myRadioListTile).toList())
 Dynamically redefine the overlay styles
 
 ```dart
-ThemeConfig.overlayStyle = myNewOverlayStyle;
-ThemeConfig.darkOverlayStyle = myNewDarkOverlayStyle;
+ThemeConfig.setOverlayStyle(newOverlayStyle);
+ThemeConfig.setDarkOverlayStyle(newDarkOverlayStyle);
 ```
 
 Change the current overlay style
 
 ```dart
-ThemeConfig.setOverlayStyle(myCustomOverlayStyle);
+ThemeConfig.setCustomOverlayStyle(customOverlayStyle);
 ```
 
-Reset the overlay style to the initially defined
+Remove the current overlay style
 
 ```dart
-ThemeConfig.resetOverlayStyle();
+ThemeConfig.removeCustomOverlayStyle();
 ```
 
-Temporarily change the overlay style when on a specific page
+Temporarily change the light and/or dark overlay styles when on a specific page
 
 ```dart
-CustomOverlayStyle(
-	style: myCustomOverlayStyle,
+OverlayStyle(
+	light: newOverlayStyle,
+	dark: newDarkOverlayStyle,
+	child: ...
+)
+```
+
+Or the custom overlay style
+
+```dart
+OverlayStyle.custom(
+	style: customOverlayStyle,
 	child: ...
 )
 ```

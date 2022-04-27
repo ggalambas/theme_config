@@ -4,14 +4,25 @@ class ThemeProfile {
   final ThemeData _light;
   final ThemeData _dark;
 
+  /// {@template description}
+  /// Provides the app's themes and overlay styles for the ThemeConfig to handle
+  /// {@endtemplate}
+  ///
+  /// To set the styles based on a colorScheme, use [ThemeProfile.fromColorScheme()]
   ThemeProfile({
-    ThemeData? lightTheme,
+    ThemeData? theme,
     ThemeData? darkTheme,
     SystemUiOverlayStyle overlayStyle = SystemUiOverlayStyle.light,
     SystemUiOverlayStyle darkOverlayStyle = SystemUiOverlayStyle.dark,
-  })  : _light = lightTheme ?? ThemeData.light(),
-        _dark = darkTheme ?? ThemeData.dark();
+  })  : _light = theme ?? ThemeData.light(),
+        _dark = darkTheme ?? ThemeData.dark() {
+    LightOverlay().setStyle(overlayStyle, refresh: false);
+    DarkOverlay().setStyle(darkOverlayStyle, refresh: false);
+  }
 
+  /// {@macro description}
+  ///
+  /// To set the styles independently, use [ThemeProfile()]
   ThemeProfile.fromColorScheme({
     ColorScheme colorScheme = const ColorScheme.light(),
     ColorScheme darkColorScheme = const ColorScheme.dark(),
@@ -30,6 +41,7 @@ class ThemeProfile {
   static ThemeData _defaultTheme(ColorScheme colorScheme) =>
       ThemeData.from(colorScheme: colorScheme);
 
+  /// Light theme with the light overlay style applied
   ThemeData get light => _light.copyWith(
         appBarTheme: _light.appBarTheme.copyWith(
           systemOverlayStyle:
@@ -37,6 +49,7 @@ class ThemeProfile {
         ),
       );
 
+  /// Dark theme with the dark overlay style applied
   ThemeData get dark => _dark.copyWith(
         appBarTheme: _dark.appBarTheme.copyWith(
           systemOverlayStyle:

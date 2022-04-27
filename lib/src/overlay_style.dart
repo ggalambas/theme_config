@@ -1,33 +1,60 @@
 part of '../theme_config.dart';
 
 class OverlayStyle extends StatefulWidget {
-  final SystemUiOverlayStyle style;
+  final SystemUiOverlayStyle? lightStyle;
   final SystemUiOverlayStyle? darkStyle;
+  final SystemUiOverlayStyle? customStyle;
   final Widget child;
 
+  const OverlayStyle._({
+    Key? key,
+    this.lightStyle,
+    this.darkStyle,
+    this.customStyle,
+    required this.child,
+  }) : super(key: key);
+
+  /// {@template description}
   /// Route aware widget that sets an overlay style when entering the screen
   /// and resets it back when leaving
+  ///
+  /// For this widget to work you must add [ThemeConfig.routeObserver] to
+  /// [MaterialApp.navigatorObservers]
+  ///
+  /// ```dart
+  /// MaterialApp(
+  ///   navigatorObservers: [ThemeConfig.routeObserver]
+  /// )
+  /// ```
+  /// {@endtemplate}
   ///
   /// To set just one style for both themes, use [OverlayStyle.custom()]
-  const OverlayStyle({
+  factory OverlayStyle({
     Key? key,
-    required SystemUiOverlayStyle light,
-    required SystemUiOverlayStyle dark,
-    required this.child,
-  })  : style = light,
-        darkStyle = dark,
-        super(key: key);
+    SystemUiOverlayStyle? light,
+    SystemUiOverlayStyle? dark,
+    required Widget child,
+  }) =>
+      OverlayStyle._(
+        key: key,
+        lightStyle: light,
+        darkStyle: dark,
+        child: child,
+      );
 
-  /// Route aware widget that sets an overlay style when entering the screen
-  /// and resets it back when leaving
+  /// {@macro description}
   ///
   /// To different styles for each theme, use [OverlayStyle()]
-  const OverlayStyle.custom({
+  factory OverlayStyle.custom({
     Key? key,
-    required this.style,
-    required this.child,
-  })  : darkStyle = null,
-        super(key: key);
+    required SystemUiOverlayStyle style,
+    required Widget child,
+  }) =>
+      OverlayStyle._(
+        key: key,
+        customStyle: style,
+        child: child,
+      );
 
   @override
   State<OverlayStyle> createState() => _OverlayStyleState();
@@ -38,7 +65,9 @@ class _OverlayStyleState extends RouteAwareState<OverlayStyle> {
   late final SystemUiOverlayStyle oldDark;
   late final SystemUiOverlayStyle? oldCustom;
 
-  bool get isCustom => widget.darkStyle == null;
+  bool get isCustom => widget.customStyle != null;
+  SystemUiOverlayStyle get light => widget.lightStyle ?? oldLight;
+  SystemUiOverlayStyle get dark => widget.darkStyle ?? oldDark;
 
   void saveOldStyles() {
     oldLight = LightOverlay().style;
@@ -52,13 +81,13 @@ class _OverlayStyleState extends RouteAwareState<OverlayStyle> {
   void onEnterScreen() {
     saveOldStyles();
     if (isCustom) {
-      ThemeConfig.setCustomOverlayStyle(widget.style);
+      ThemeConfig.setCustomOverlayStyle(widget.customStyle!);
     } else if (oldCustom == null) {
-      ThemeConfig._setOverlayStyle(widget.style, refresh: false);
-      ThemeConfig._setDarkOverlayStyle(widget.darkStyle!);
+      ThemeConfig._setOverlayStyle(light, refresh: false);
+      ThemeConfig._setDarkOverlayStyle(dark);
     } else {
-      ThemeConfig._setOverlayStyle(widget.style, refresh: false);
-      ThemeConfig._setDarkOverlayStyle(widget.darkStyle!, refresh: false);
+      ThemeConfig._setOverlayStyle(light, refresh: false);
+      ThemeConfig._setDarkOverlayStyle(dark, refresh: false);
       ThemeConfig.removeCustomOverlayStyle();
     }
   }

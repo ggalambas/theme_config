@@ -59,7 +59,6 @@ abstract class ThemeConfig {
   static Brightness get brightness => _read(_brightnessProvider);
 
   /// Overrides the previously set [overlayStyle]
-  /// todo [refresh]
   static setOverlayStyle(SystemUiOverlayStyle style) => _setOverlayStyle(style);
   static _setOverlayStyle(
     SystemUiOverlayStyle style, {
@@ -72,7 +71,6 @@ abstract class ThemeConfig {
       );
 
   /// Overrides the previously set [darkOverlayStyle]
-  /// todo [refresh]
   static setDarkOverlayStyle(SystemUiOverlayStyle style) =>
       _setDarkOverlayStyle(style);
   static _setDarkOverlayStyle(
