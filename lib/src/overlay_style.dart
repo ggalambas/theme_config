@@ -102,9 +102,9 @@ class _OverlayStyleState extends RouteAwareState<OverlayStyle> {
       ThemeConfig._setOverlayStyle(oldLight, refresh: false);
       ThemeConfig._setDarkOverlayStyle(oldDark);
     } else {
+      ThemeConfig.setCustomOverlayStyle(oldCustom!);
       ThemeConfig._setOverlayStyle(oldLight, refresh: false);
       ThemeConfig._setDarkOverlayStyle(oldDark, refresh: false);
-      ThemeConfig.setCustomOverlayStyle(oldCustom!);
     }
   }
 

@@ -9,7 +9,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:theme_config/components/overlay.dart';
 import 'package:theme_config/components/route_aware_state.dart';
-import 'package:theme_config/helpers/extensions.dart';
 
 export 'helpers/extensions.dart';
 
@@ -67,7 +66,7 @@ abstract class ThemeConfig {
       LightOverlay().setStyle(
         style,
         refresh: refresh,
-        apply: brightness.isLight,
+        apply: _overlay is LightOverlay,
       );
 
   /// Overrides the previously set [darkOverlayStyle]
@@ -80,7 +79,7 @@ abstract class ThemeConfig {
       DarkOverlay().setStyle(
         style,
         refresh: refresh,
-        apply: brightness.isDark,
+        apply: _overlay is DarkOverlay,
       );
 
   /// Overrides all the styles, to reset you can call [removeCustomOverlayStyle]
