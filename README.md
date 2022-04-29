@@ -1,10 +1,10 @@
 ThemeConfig makes it easy to switch the status and navigation bars styles when the platform theme changes.
 
 <p align="center">
-<img alt="theme-mode" src="https://user-images.githubusercontent.com/23039652/165973836-f6931c27-b65b-4cd0-b036-8a32d6b88a75.gif" width="240px" style="padding:4px">
-<img alt="overlay-style" src="https://user-images.githubusercontent.com/23039652/165973823-dd95daa4-774c-46f9-9913-632b43c44207.gif" width="240px" style="padding:4px">
-<img alt="custom-overlay-style" src="https://user-images.githubusercontent.com/23039652/165973827-91841c80-388b-4a57-8b4c-b428792ddda1.gif" width="240px" style="padding:4px">
-<img alt="page-overlay-style" src="https://user-images.githubusercontent.com/23039652/165973830-bc9eeea6-ac1f-4521-b46b-30ea8f6e4531.gif" width="240px" style="padding:4px">
+<img alt="theme-mode" src="https://user-images.githubusercontent.com/23039652/165973836-f6931c27-b65b-4cd0-b036-8a32d6b88a75.gif" width="200px" style="padding:4px">
+<img alt="overlay-style" src="https://user-images.githubusercontent.com/23039652/165973823-dd95daa4-774c-46f9-9913-632b43c44207.gif" width="200px" style="padding:4px">
+<img alt="custom-overlay-style" src="https://user-images.githubusercontent.com/23039652/165973827-91841c80-388b-4a57-8b4c-b428792ddda1.gif" width="200px" style="padding:4px">
+<img alt="page-overlay-style" src="https://user-images.githubusercontent.com/23039652/165973830-bc9eeea6-ac1f-4521-b46b-30ea8f6e4531.gif" width="200px" style="padding:4px">
 </p>
 
 ## Features
