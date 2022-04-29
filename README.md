@@ -1,10 +1,10 @@
 ThemeConfig makes it easy to switch the status and navigation bars styles when the platform theme changes.
 
 <p align="center">
-<img alt="" src="" height="200px" style="padding:4px">
-<img alt="" src="" height="200px" style="padding:4px">
-<img alt="" src="" height="200px" style="padding:4px">
-<img alt="" src="" height="200px" style="padding:4px">
+<img alt="theme-mode" src="" width="240px" style="padding:4px">
+<img alt="overlay-style" src="" width="240px" style="padding:4px">
+<img alt="custom-overlay-style" src="" width="240px" style="padding:4px">
+<img alt="page-overlay-style" src="" width="240px" style="padding:4px">
 </p>
 
 ## Features
@@ -143,4 +143,4 @@ MaterialApp(
 
 ## Additional information
 
-If you notice any bugs not present in [issues](), please file a new issue. If you are willing to fix or enhance things yourself, you are very welcome to make a pull request.
+If you notice any bugs not present in [issues](https://github.com/ggalambas/theme_config/issues), please file a new issue. If you are willing to fix or enhance things yourself, you are very welcome to make a pull request.

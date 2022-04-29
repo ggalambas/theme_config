@@ -2,6 +2,6 @@
 
 An example app to showcase the ThemeConfig package.
 
-<p align="center>
-<img src="" alt="example-theme-config" width="240">
+<p align="center">
+<img alt="example-theme-config" src="" width="240px">
 </p>
