@@ -83,11 +83,12 @@ class _OverlayStyleState extends RouteAwareState<OverlayStyle> {
     if (isCustom) {
       ThemeConfig.setCustomOverlayStyle(widget.customStyle!);
     } else if (oldCustom == null) {
-      ThemeConfig._setOverlayStyle(light, refresh: false);
-      ThemeConfig._setDarkOverlayStyle(dark);
+      LightOverlay().style = light;
+      DarkOverlay().style = dark;
+      ThemeConfig._overlay.refreshAndApply();
     } else {
-      ThemeConfig._setOverlayStyle(light, refresh: false);
-      ThemeConfig._setDarkOverlayStyle(dark, refresh: false);
+      LightOverlay().style = light;
+      DarkOverlay().style = dark;
       ThemeConfig.removeCustomOverlayStyle();
     }
   }
@@ -99,12 +100,13 @@ class _OverlayStyleState extends RouteAwareState<OverlayStyle> {
           ? ThemeConfig.removeCustomOverlayStyle()
           : ThemeConfig.setCustomOverlayStyle(oldCustom!);
     } else if (oldCustom == null) {
-      ThemeConfig._setOverlayStyle(oldLight, refresh: false);
-      ThemeConfig._setDarkOverlayStyle(oldDark);
+      LightOverlay().style = oldLight;
+      DarkOverlay().style = oldDark;
+      ThemeConfig._overlay.refreshAndApply();
     } else {
+      LightOverlay().style = oldLight;
+      DarkOverlay().style = oldDark;
       ThemeConfig.setCustomOverlayStyle(oldCustom!);
-      ThemeConfig._setOverlayStyle(oldLight, refresh: false);
-      ThemeConfig._setDarkOverlayStyle(oldDark, refresh: false);
     }
   }
 

@@ -58,29 +58,16 @@ abstract class ThemeConfig {
   static Brightness get brightness => _read(_brightnessProvider);
 
   /// Overrides the previously set [overlayStyle]
-  static setOverlayStyle(SystemUiOverlayStyle style) => _setOverlayStyle(style);
-  static _setOverlayStyle(
-    SystemUiOverlayStyle style, {
-    bool refresh = true,
-  }) =>
-      LightOverlay().setStyle(
-        style,
-        refresh: refresh,
-        apply: _overlay is LightOverlay,
-      );
+  static setOverlayStyle(SystemUiOverlayStyle style) {
+    LightOverlay().style = style;
+    _overlay.refreshAndApply(apply: _overlay is LightOverlay);
+  }
 
   /// Overrides the previously set [darkOverlayStyle]
-  static setDarkOverlayStyle(SystemUiOverlayStyle style) =>
-      _setDarkOverlayStyle(style);
-  static _setDarkOverlayStyle(
-    SystemUiOverlayStyle style, {
-    bool refresh = true,
-  }) =>
-      DarkOverlay().setStyle(
-        style,
-        refresh: refresh,
-        apply: _overlay is DarkOverlay,
-      );
+  static setDarkOverlayStyle(SystemUiOverlayStyle style) {
+    DarkOverlay().style = style;
+    _overlay.refreshAndApply(apply: _overlay is DarkOverlay);
+  }
 
   /// Overrides all the styles, to reset you can call [removeCustomOverlayStyle]
   static void setCustomOverlayStyle(SystemUiOverlayStyle style) =>

@@ -13,7 +13,7 @@ abstract class Overlay {
   }) {
     _refresh = refresh;
     _changeOverlay = changeOverlay;
-    return (brightness.isLight ? LightOverlay() : DarkOverlay()).._apply();
+    return (brightness.isLight ? LightOverlay() : DarkOverlay())..apply();
   }
 
   Overlay _changeTo(Overlay overlay) {
@@ -21,33 +21,18 @@ abstract class Overlay {
     return overlay;
   }
 
-  late SystemUiOverlayStyle _style;
-  SystemUiOverlayStyle get style => _style;
-  void setStyle(
-    SystemUiOverlayStyle style, {
-    bool refresh = true,
-    bool apply = true,
-  }) {
-    _style = style;
-    if (refresh && apply) {
-      _refreshAndApply();
-    } else if (refresh) {
-      _refresh();
-    } else if (apply) {
-      _apply();
-    }
-  }
+  late SystemUiOverlayStyle style;
 
   Overlay([SystemUiOverlayStyle? style]) {
-    if (style != null) _style = style;
+    if (style != null) this.style = style;
   }
 
-  void _refreshAndApply() {
+  void refreshAndApply({bool apply = true}) {
     _refresh();
-    Future.delayed(const Duration(milliseconds: 200), _apply);
+    if (apply) Future.delayed(const Duration(milliseconds: 200), this.apply);
   }
 
-  void _apply() => SystemChrome.setSystemUIOverlayStyle(_style);
+  void apply() => SystemChrome.setSystemUIOverlayStyle(style);
 
   SystemUiOverlayStyle? get customOrNull;
   void updateFromBrightness(Brightness brightness) {}
@@ -61,7 +46,7 @@ abstract class BrightnessOverlay extends Overlay {
 
   @override
   void setCustom(SystemUiOverlayStyle style) =>
-      _changeTo(CustomOverlay(style))._refreshAndApply();
+      _changeTo(CustomOverlay(style)).refreshAndApply();
 
   @override
   SystemUiOverlayStyle? get customOrNull => null;
@@ -74,7 +59,7 @@ class LightOverlay extends BrightnessOverlay {
 
   @override
   void updateFromBrightness(Brightness brightness) {
-    if (brightness.isDark) _changeTo(DarkOverlay())._refreshAndApply();
+    if (brightness.isDark) _changeTo(DarkOverlay()).refreshAndApply();
   }
 }
 
@@ -85,7 +70,7 @@ class DarkOverlay extends BrightnessOverlay {
 
   @override
   void updateFromBrightness(Brightness brightness) {
-    if (brightness.isLight) _changeTo(LightOverlay())._refreshAndApply();
+    if (brightness.isLight) _changeTo(LightOverlay()).refreshAndApply();
   }
 }
 
@@ -93,11 +78,14 @@ class CustomOverlay extends Overlay {
   CustomOverlay(style) : super(style);
 
   @override
-  void setCustom(SystemUiOverlayStyle style) => setStyle(style);
+  void setCustom(SystemUiOverlayStyle style) {
+    this.style = style;
+    refreshAndApply();
+  }
 
   @override
   void removeCustom(Brightness brightness) =>
-      _changeTo(BrightnessOverlay.resolve(brightness))._refreshAndApply();
+      _changeTo(BrightnessOverlay.resolve(brightness)).refreshAndApply();
 
   @override
   SystemUiOverlayStyle? get customOrNull => style;
