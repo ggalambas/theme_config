@@ -21,7 +21,7 @@ abstract class Overlay {
     return overlay;
   }
 
-  late SystemUiOverlayStyle style;
+  SystemUiOverlayStyle? style;
 
   Overlay([SystemUiOverlayStyle? style]) {
     if (style != null) this.style = style;
@@ -32,7 +32,9 @@ abstract class Overlay {
     if (apply) Future.delayed(const Duration(milliseconds: 200), this.apply);
   }
 
-  void apply() => SystemChrome.setSystemUIOverlayStyle(style);
+  void apply() => style == null
+      ? SystemChrome.restoreSystemUIOverlays()
+      : SystemChrome.setSystemUIOverlayStyle(style!);
 
   SystemUiOverlayStyle? get customOrNull;
   void updateFromBrightness(Brightness brightness) {}

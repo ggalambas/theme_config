@@ -12,8 +12,8 @@ class ThemeProfile {
   ThemeProfile({
     ThemeData? theme,
     ThemeData? darkTheme,
-    SystemUiOverlayStyle overlayStyle = SystemUiOverlayStyle.light,
-    SystemUiOverlayStyle darkOverlayStyle = SystemUiOverlayStyle.dark,
+    SystemUiOverlayStyle? overlayStyle,
+    SystemUiOverlayStyle? darkOverlayStyle,
   })  : _light = theme ?? ThemeData.light(),
         _dark = darkTheme ?? ThemeData.dark() {
     LightOverlay().style = overlayStyle;
@@ -24,16 +24,14 @@ class ThemeProfile {
   ///
   /// To set the styles independently, use [ThemeProfile()]
   ThemeProfile.fromColorScheme({
-    ColorScheme colorScheme = const ColorScheme.light(),
-    ColorScheme darkColorScheme = const ColorScheme.dark(),
+    required ColorScheme colorScheme,
+    required ColorScheme darkColorScheme,
     ThemeData Function(ColorScheme colorScheme)? theme,
-    SystemUiOverlayStyle Function(ColorScheme colorScheme)? overlayStyle,
+    SystemUiOverlayStyle? Function(ColorScheme colorScheme)? overlayStyle,
   })  : _light = theme?.call(colorScheme) ?? _defaultTheme(colorScheme),
         _dark = theme?.call(darkColorScheme) ?? _defaultTheme(darkColorScheme) {
-    LightOverlay().style =
-        overlayStyle?.call(colorScheme) ?? SystemUiOverlayStyle.light;
-    DarkOverlay().style =
-        overlayStyle?.call(darkColorScheme) ?? SystemUiOverlayStyle.dark;
+    LightOverlay().style = overlayStyle?.call(colorScheme);
+    DarkOverlay().style = overlayStyle?.call(darkColorScheme);
   }
 
   static ThemeData _defaultTheme(ColorScheme colorScheme) =>

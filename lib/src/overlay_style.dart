@@ -4,6 +4,7 @@ class OverlayStyle extends StatefulWidget {
   final SystemUiOverlayStyle? lightStyle;
   final SystemUiOverlayStyle? darkStyle;
   final SystemUiOverlayStyle? customStyle;
+  final bool isCustom;
   final Widget child;
 
   const OverlayStyle._({
@@ -11,6 +12,7 @@ class OverlayStyle extends StatefulWidget {
     this.lightStyle,
     this.darkStyle,
     this.customStyle,
+    required this.isCustom,
     required this.child,
   }) : super(key: key);
 
@@ -39,6 +41,7 @@ class OverlayStyle extends StatefulWidget {
         key: key,
         lightStyle: light,
         darkStyle: dark,
+        isCustom: false,
         child: child,
       );
 
@@ -47,12 +50,13 @@ class OverlayStyle extends StatefulWidget {
   /// To different styles for each theme, use [OverlayStyle()]
   factory OverlayStyle.custom({
     Key? key,
-    required SystemUiOverlayStyle style,
+    required SystemUiOverlayStyle? style,
     required Widget child,
   }) =>
       OverlayStyle._(
         key: key,
         customStyle: style,
+        isCustom: true,
         child: child,
       );
 
@@ -61,45 +65,41 @@ class OverlayStyle extends StatefulWidget {
 }
 
 class _OverlayStyleState extends RouteAwareState<OverlayStyle> {
-  late final SystemUiOverlayStyle oldLight;
-  late final SystemUiOverlayStyle oldDark;
+  late final bool wasCustom;
+  late final SystemUiOverlayStyle? oldLight;
+  late final SystemUiOverlayStyle? oldDark;
   late final SystemUiOverlayStyle? oldCustom;
 
-  bool get isCustom => widget.customStyle != null;
-  SystemUiOverlayStyle get light => widget.lightStyle ?? oldLight;
-  SystemUiOverlayStyle get dark => widget.darkStyle ?? oldDark;
-
   void saveOldStyles() {
+    wasCustom = ThemeConfig._overlay is CustomOverlay;
     oldLight = LightOverlay().style;
     oldDark = DarkOverlay().style;
-    oldCustom = ThemeConfig._overlay is CustomOverlay
-        ? ThemeConfig._overlay.style
-        : null;
+    oldCustom = wasCustom ? ThemeConfig._overlay.style : null;
   }
 
   @override
   void onEnterScreen() {
     saveOldStyles();
-    if (isCustom) {
+    if (widget.isCustom) {
       ThemeConfig.setCustomOverlayStyle(widget.customStyle!);
-    } else if (oldCustom == null) {
-      LightOverlay().style = light;
-      DarkOverlay().style = dark;
+    } else if (wasCustom) {
+      LightOverlay().style = widget.lightStyle;
+      DarkOverlay().style = widget.darkStyle;
       ThemeConfig._overlay.refreshAndApply();
     } else {
-      LightOverlay().style = light;
-      DarkOverlay().style = dark;
+      LightOverlay().style = widget.lightStyle;
+      DarkOverlay().style = widget.darkStyle;
       ThemeConfig.removeCustomOverlayStyle();
     }
   }
 
   @override
   void onLeaveScreen() {
-    if (isCustom) {
-      oldCustom == null
+    if (widget.isCustom) {
+      wasCustom
           ? ThemeConfig.removeCustomOverlayStyle()
           : ThemeConfig.setCustomOverlayStyle(oldCustom!);
-    } else if (oldCustom == null) {
+    } else if (wasCustom) {
       LightOverlay().style = oldLight;
       DarkOverlay().style = oldDark;
       ThemeConfig._overlay.refreshAndApply();
