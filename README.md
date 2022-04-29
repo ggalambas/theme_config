@@ -1,10 +1,10 @@
 ThemeConfig makes it easy to switch the status and navigation bars styles when the platform theme changes.
 
 <p align="center">
-<img alt="theme-mode" src="" width="240px" style="padding:4px">
-<img alt="overlay-style" src="" width="240px" style="padding:4px">
-<img alt="custom-overlay-style" src="" width="240px" style="padding:4px">
-<img alt="page-overlay-style" src="" width="240px" style="padding:4px">
+<img alt="theme-mode" src="https://user-images.githubusercontent.com/23039652/165970262-181e2ef5-d2f0-4d99-a91e-317caf7c7935.gif" width="240px" style="padding:4px">
+<img alt="overlay-style" src="https://user-images.githubusercontent.com/23039652/165970360-dcd9edb8-907d-4143-8199-087d1318e263.gif" width="240px" style="padding:4px">
+<img alt="custom-overlay-style" src="https://user-images.githubusercontent.com/23039652/165970355-d2636d8b-9097-478e-b844-06217574ad37.gif" width="240px" style="padding:4px">
+<img alt="page-overlay-style" src="https://user-images.githubusercontent.com/23039652/165970348-8e6de94a-8b2e-46b8-97dd-0a47e46dc4f9.gif" width="240px" style="padding:4px">
 </p>
 
 ## Features
