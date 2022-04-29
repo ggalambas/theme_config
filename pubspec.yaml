@@ -1,7 +1,7 @@
 name: theme_config
 description: Switch the status and navigation bars styles when the platform theme changes.
-version: 0.0.1
-homepage: null
+version: 0.1.0
+repository: https://github.com/ggalambas/theme_config
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
