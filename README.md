@@ -132,6 +132,15 @@ OverlayStyle.custom(
 )
 ```
 
+For this widget to work you must also add our observer to the material app
+
+```dart
+MaterialApp(
+	...
+	navigatorObservers: [ThemeConfig.routeObserver],
+)
+```
+
 ## Additional information
 
 If you notice any bugs not present in [issues](), please file a new issue. If you are willing to fix or enhance things yourself, you are very welcome to make a pull request.

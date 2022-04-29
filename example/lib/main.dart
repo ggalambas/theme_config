@@ -45,12 +45,14 @@ class MyApp extends StatelessWidget {
     return ThemeBuilder(
       builder: (theme) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'ThemeConfig Example',
           home: const Example(),
           //* 4. Set the theme properties
           theme: theme.light,
           darkTheme: theme.dark,
           themeMode: theme.mode,
+          //! add this line if you plan to use the OverlayStyle widget
           navigatorObservers: [ThemeConfig.routeObserver],
         );
       },
@@ -115,7 +117,7 @@ class _ExampleState extends State<Example> {
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const OverlayPage()),
-              ),
+              ).then((_) => setState(() {})),
             ),
             OutlinedButton(
               child: const Text('navigate to custom overlay page'),
