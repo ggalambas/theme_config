@@ -1,10 +1,10 @@
 ThemeConfig makes it easy to switch the status and navigation bars styles when the platform theme changes.
 
-<p align="center">
-<img alt="theme-mode" src="https://user-images.githubusercontent.com/23039652/165973836-f6931c27-b65b-4cd0-b036-8a32d6b88a75.gif" width="200px" style="padding:4px">
-<img alt="overlay-style" src="https://user-images.githubusercontent.com/23039652/165973823-dd95daa4-774c-46f9-9913-632b43c44207.gif" width="200px" style="padding:4px">
-<img alt="custom-overlay-style" src="https://user-images.githubusercontent.com/23039652/165973827-91841c80-388b-4a57-8b4c-b428792ddda1.gif" width="200px" style="padding:4px">
-<img alt="page-overlay-style" src="https://user-images.githubusercontent.com/23039652/165973830-bc9eeea6-ac1f-4521-b46b-30ea8f6e4531.gif" width="200px" style="padding:4px">
+<p>
+<img alt="theme-mode" src="https://user-images.githubusercontent.com/23039652/165973836-f6931c27-b65b-4cd0-b036-8a32d6b88a75.gif" width="180px">
+<img alt="overlay-style" src="https://user-images.githubusercontent.com/23039652/165973823-dd95daa4-774c-46f9-9913-632b43c44207.gif" width="180px">
+<img alt="custom-overlay-style" src="https://user-images.githubusercontent.com/23039652/165973827-91841c80-388b-4a57-8b4c-b428792ddda1.gif" width="180px">
+<img alt="page-overlay-style" src="https://user-images.githubusercontent.com/23039652/165973830-bc9eeea6-ac1f-4521-b46b-30ea8f6e4531.gif" width="180px">
 </p>
 
 ## Features
@@ -19,10 +19,10 @@ Create a theme profile defining each style independently
 
 ```dart
 final themeProfile = ThemeProfile(
-	theme: ThemeData.light(),
-	darkTheme: ThemeData.dark(),
-	overlayStyle: SystemUiOverlayStyle.light,
-	darkOverlayStyle: SystemUiOverlayStyle.dark,
+  theme: ThemeData.light(),
+  darkTheme: ThemeData.dark(),
+  overlayStyle: SystemUiOverlayStyle.light,
+  darkOverlayStyle: SystemUiOverlayStyle.dark,
 );
 ```
 
@@ -30,10 +30,10 @@ Or based on color schemes
 
 ```dart
 final themeProfile = ThemeProfile.fromColorScheme(
-	colorScheme: ColorScheme.light(),
-	darkColorScheme: ColorScheme.dark(),
-	theme: (colorScheme) => ThemeData.from(colorScheme: colorScheme),
-	overlayStyle: (colorScheme) => SystemUiOverlayStyle(...),
+  colorScheme: ColorScheme.light(),
+  darkColorScheme: ColorScheme.dark(),
+  theme: (colorScheme) => ThemeData.from(colorScheme: colorScheme),
+  overlayStyle: (colorScheme) => SystemUiOverlayStyle(...),
 );
 ```
 
@@ -41,9 +41,9 @@ ThemeConfig must be initialized so it can save and load the theme mode preferenc
 
 ```dart
 Future<void> main() async {
-	...
+  ...
   await ThemeConfig.init(themeProfile);
-	runApp(MyApp());
+  runApp(MyApp());
 }
 ```
 
@@ -52,9 +52,9 @@ Wrap the MaterialApp with the ThemeBuilder widget so it can listen to the platfo
 ```dart
 ThemeBuilder(
   builder: (theme) => MaterialApp(
-		...
-		theme: theme.light,
-		darkTheme: theme.dark,
+    ...
+    theme: theme.light,
+    darkTheme: theme.dark,
     themeMode: theme.mode,
   ),
 )
@@ -81,12 +81,12 @@ ThemeConfig.setThemeMode(ThemeMode.system);
 
 ```dart
 Widget myRadioListTile(ThemeMode themeMode) {
-	return RadioListTile<ThemeMode>(
-		title: Text(themeMode.name),
-		value: themeMode,
-		groupValue: ThemeConfig.themeMode,
-		onChanged: (mode) => setState(() => ThemeConfig.setThemeMode(mode)),
-	);
+  return RadioListTile<ThemeMode>(
+    title: Text(themeMode.name),
+    value: themeMode,
+    groupValue: ThemeConfig.themeMode,
+    onChanged: (mode) => setState(() => ThemeConfig.setThemeMode(mode)),
+  );
 }
 ```
 
@@ -117,9 +117,9 @@ Temporarily change the light and/or dark overlay styles when on a specific page
 
 ```dart
 OverlayStyle(
-	light: newOverlayStyle,
-	dark: newDarkOverlayStyle,
-	child: ...
+  light: newOverlayStyle,
+  dark: newDarkOverlayStyle,
+  child: ...
 )
 ```
 
@@ -127,8 +127,8 @@ Or the custom overlay style
 
 ```dart
 OverlayStyle.custom(
-	style: customOverlayStyle,
-	child: ...
+  style: customOverlayStyle,
+  child: ...
 )
 ```
 
@@ -136,8 +136,8 @@ For this widget to work you must also add our observer to the material app
 
 ```dart
 MaterialApp(
-	...
-	navigatorObservers: [ThemeConfig.routeObserver],
+  ...
+  navigatorObservers: [ThemeConfig.routeObserver],
 )
 ```
 
