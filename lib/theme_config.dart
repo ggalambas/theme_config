@@ -1,3 +1,4 @@
+/// theme_config  package
 library theme_config;
 
 import 'dart:async';
@@ -47,23 +48,23 @@ abstract class ThemeConfig {
         changeOverlay: (overlay) => _overlay = overlay,
       );
 
-  /// Gets the current [themeMode] of the application
+  /// Gets the current theme mode of the application
   static ThemeMode get themeMode => _read(_themeModeProvider);
 
   /// Sets a new [themeMode] for the application
   static setThemeMode(ThemeMode themeMode) =>
       _read(_themeModeProvider.notifier).state = themeMode;
 
-  /// Gets the current [brightness] of the application
+  /// Gets the current brightness of the application
   static Brightness get brightness => _read(_brightnessProvider);
 
-  /// Overrides the previously set [overlayStyle]
+  /// Overrides the previously set overlay style
   static setOverlayStyle(SystemUiOverlayStyle style) {
     LightOverlay().style = style;
     _overlay.refreshAndApply(apply: _overlay is LightOverlay);
   }
 
-  /// Overrides the previously set [darkOverlayStyle]
+  /// Overrides the previously set dark overlay style
   static setDarkOverlayStyle(SystemUiOverlayStyle style) {
     DarkOverlay().style = style;
     _overlay.refreshAndApply(apply: _overlay is DarkOverlay);
@@ -73,6 +74,6 @@ abstract class ThemeConfig {
   static void setCustomOverlayStyle(SystemUiOverlayStyle style) =>
       _overlay.setCustom(style);
 
-  /// Removes the [customOverlay]
+  /// Removes the custom overlay style
   static void removeCustomOverlayStyle() => _overlay.removeCustom(brightness);
 }

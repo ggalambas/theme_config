@@ -1,21 +1,21 @@
 name: theme_config
 description: Switch the status and navigation bars styles when the platform theme changes.
-version: 0.1.0
+version: 0.1.1
 repository: https://github.com/ggalambas/theme_config
 
 environment:
-  sdk: ">=2.16.2 <3.0.0"
+  sdk: ">=2.17.1 <3.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
-  after_layout: ^1.1.0
+  after_layout: ^1.2.0
   flutter:
     sdk: flutter
   flutter_riverpod: ^1.0.3
-  shared_preferences: ^2.0.13
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
 

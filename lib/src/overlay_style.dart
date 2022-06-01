@@ -30,7 +30,7 @@ class OverlayStyle extends StatefulWidget {
   /// ```
   /// {@endtemplate}
   ///
-  /// To set just one style for both themes, use [OverlayStyle.custom()]
+  /// To set just one style for both themes, use [OverlayStyle.custom]
   factory OverlayStyle({
     Key? key,
     SystemUiOverlayStyle? light,
@@ -47,7 +47,7 @@ class OverlayStyle extends StatefulWidget {
 
   /// {@macro description}
   ///
-  /// To different styles for each theme, use [OverlayStyle()]
+  /// To different styles for each theme, use [OverlayStyle]
   factory OverlayStyle.custom({
     Key? key,
     required SystemUiOverlayStyle? style,
@@ -97,8 +97,8 @@ class _OverlayStyleState extends RouteAwareState<OverlayStyle> {
   void onLeaveScreen() {
     if (widget.isCustom) {
       wasCustom
-          ? ThemeConfig.removeCustomOverlayStyle()
-          : ThemeConfig.setCustomOverlayStyle(oldCustom!);
+          ? ThemeConfig.setCustomOverlayStyle(oldCustom!)
+          : ThemeConfig.removeCustomOverlayStyle();
     } else if (wasCustom) {
       LightOverlay().style = oldLight;
       DarkOverlay().style = oldDark;

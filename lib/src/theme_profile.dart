@@ -8,7 +8,7 @@ class ThemeProfile {
   /// Provides the app's themes and overlay styles for the ThemeConfig to handle
   /// {@endtemplate}
   ///
-  /// To set the styles based on a colorScheme, use [ThemeProfile.fromColorScheme()]
+  /// To set the styles based on a colorScheme, use [ThemeProfile.fromColorScheme]
   ThemeProfile({
     ThemeData? theme,
     ThemeData? darkTheme,
@@ -22,7 +22,7 @@ class ThemeProfile {
 
   /// {@macro description}
   ///
-  /// To set the styles independently, use [ThemeProfile()]
+  /// To set the styles independently, use [ThemeProfile]
   ThemeProfile.fromColorScheme({
     required ColorScheme colorScheme,
     required ColorScheme darkColorScheme,

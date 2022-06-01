@@ -3,7 +3,7 @@ part of '../theme_config.dart';
 class ThemeBuilder extends StatelessWidget {
   /// {@template builder}
   /// MaterialApp's theme, darkTheme and themeMode must be
-  /// set to [theme.light], [theme.dark] and [theme.mode], repectively
+  /// set to theme, theme.dark and theme.mode, repectively
   ///
   /// ```dart
   /// ThemeBuilder(
@@ -44,7 +44,7 @@ class _ThemeObserverState extends ConsumerState<_ThemeObserver>
     super.initState();
     ThemeConfig._read = ref.read;
     ThemeConfig._initOverlay(refresh: () => mounted ? setState(() {}) : null);
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
@@ -55,7 +55,7 @@ class _ThemeObserverState extends ConsumerState<_ThemeObserver>
 
   @override
   void dispose() {
-    WidgetsBinding.instance?.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 

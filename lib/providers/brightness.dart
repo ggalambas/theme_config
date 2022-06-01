@@ -25,5 +25,5 @@ class _BrightnessNotifier extends StateNotifier<Brightness> {
   }
 
   static Brightness get _platformBrightness =>
-      SchedulerBinding.instance!.window.platformBrightness;
+      SchedulerBinding.instance.window.platformBrightness;
 }
